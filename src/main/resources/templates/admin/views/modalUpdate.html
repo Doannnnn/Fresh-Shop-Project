@@ -1,0 +1,71 @@
+<th:block th:fragment="modalUpdate">
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-xl" role="document" style="top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form id="frmUpdate">
+                        <div class="row mb-4 mt-4">
+                            <div id="productId" style="display: none;"></div>
+                            <div class="col-lg-4">
+                                <label for="nameUpdate" class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate">
+                                <div class="error-message" id="nameUpdateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="priceUpdate" class="form-label">Product Price</label>
+                                <input type="number" class="form-control" id="priceUpdate" name="priceUpdate">
+                                <div class="error-message" id="priceUpdateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="descriptionUpdate" class="form-label">Product Description</label>
+                                <input type="text" class="form-control" id="descriptionUpdate" name="descriptionUpdate">
+                                <div class="error-message" id="descriptionUpdateError"></div>
+                            </div>
+                        </div>
+                        <div class="row mb-4 mt-4">
+                            <div class="col-lg-4">
+                                <label for="imagesUpdate" class="form-label">Product Image</label>
+                                <input type="file" class="form-control" id="imagesUpdate" name="imagesUpdate" multiple required>
+                                <div class="error-message" id="imagesUpdateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="categoryUpdate" class="form-label">Product Category</label>
+                                <select class="form-control" id="categoryUpdate" name="categoryUpdate">
+                                    <option value="Vegetable">Vegetable</option>
+                                    <option value="Tubers">Tubers</option>
+                                    <option value="Fruit">Fruit</option>
+                                </select>
+                                <div class="error-message" id="categoryUpdateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="expirationDateUpdate" class="form-label">Expiration Date</label>
+                                <input type="date" class="form-control" id="expirationDateUpdate" name="expirationDateUpdate">
+                                <div class="error-message" id="expirationDateUpdateError"></div>
+                            </div>
+                        </div>
+                        <div class="row mb-4 mt-4">
+                            <div id="image-preview"></div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-outline-secondary" id="updateButton">
+                                    <i class="far fa-edit"></i>
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

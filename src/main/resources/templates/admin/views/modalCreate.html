@@ -1,0 +1,70 @@
+<th:block th:fragment="modalCreate">
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-xl" role="document" style="top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form id="frmCreate">
+                        <div class="row mb-4 mt-4">
+                            <div class="col-lg-4">
+                                <label for="nameCreate" class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="nameCreate" name="nameCreate">
+                                <div class="error-message" id="nameCreateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="priceCreate" class="form-label">Product Price</label>
+                                <input type="number" class="form-control" id="priceCreate" name="priceCreate">
+                                <div class="error-message" id="priceCreateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="descriptionCreate" class="form-label">Product Description</label>
+                                <input type="text" class="form-control" id="descriptionCreate" name="descriptionCreate">
+                                <div class="error-message" id="descriptionCreateError"></div>
+                            </div>
+                        </div>
+                        <div class="row mb-4 mt-4">
+                            <div class="col-lg-4">
+                                <label for="imagesCreate" class="form-label">Product Image</label>
+                                <input type="file" class="form-control" id="imagesCreate" name="imagesCreate" multiple required>
+                                <div class="error-message" id="imagesCreateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="categoryCreate" class="form-label">Product Category</label>
+                                <select class="form-control" id="categoryCreate" name="categoryCreate">
+                                    <option value="Vegetable">Vegetable</option>
+                                    <option value="Tubers">Tubers</option>
+                                    <option value="Fruit">Fruit</option>
+                                </select>
+                                <div class="error-message" id="categoryCreateError"></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="expirationDateCreate" class="form-label">Expiration Date</label>
+                                <input type="date" class="form-control" id="expirationDateCreate" name="expirationDateCreate">
+                                <div class="error-message" id="expirationDateCreateError"></div>
+                            </div>
+                        </div>
+                        <div class="row mb-4 mt-4">
+                                <div id="image-preview"></div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-outline-success" id="createButton">
+                                    <i class="fas fa-plus"></i>
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

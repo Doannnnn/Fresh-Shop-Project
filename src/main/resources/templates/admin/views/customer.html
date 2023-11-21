@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>DASHMIN - Bootstrap Admin Template</title>
+  <th:block th:replace="/admin/layout/head :: head"/>
+</head>
+
+<body>
+<div class="">
+
+  <!-- Spinner Start -->
+  <th:block th:replace="/admin/layout/spinner :: spinner"/>
+  <!-- Spinner End -->
+
+  <!-- Sidebar Start -->
+  <th:block th:replace="/admin/layout/sidebar :: sidebar"/>
+  <!-- Sidebar End -->
+
+  <!-- Content Start -->
+  <div class="content">
+
+    <!-- Navbar Start -->
+    <th:block th:replace="/admin/layout/navbar :: navbar"/>
+    <!-- Navbar End -->
+
+    <!-- Table Start -->
+    <div class="container-fluid" >
+      <div id="main-container" style="height: 75vh">
+        <header>
+          <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid" style="margin: 10px">
+              <span class="navbar-brand">List Of Customer</span>
+            </div>
+          </nav>
+        </header>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th colspan="2">Action</th>
+          </tr>
+          </thead>
+          <tbody id="tbCustomer">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Table End -->
+
+    <!-- Footer Start -->
+    <th:block th:replace="/admin/layout/footer :: footer"/>
+    <!-- Footer End -->
+
+  </div>
+  <!-- Content End -->
+
+</div>
+
+<!-- JavaScript Libraries -->
+<th:block th:replace="/admin/layout/jsLibraries :: jsLibraries"/>
+<!-- JavaScript Libraries -->
+
+<script>
+  $(document).ready(function() {
+    const bodyCustomer = $("#tbCustomer");
+
+    const fetchAllCustomer = async () => {
+      try {
+        return await $.ajax({
+          url: "http://localhost:8080/api/customer",
+          method: "GET",
+          dataType: "json"
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    const renderCustomer = (obj) => {
+      return `
+            <tr>
+                <td>${obj.id}</td>
+                <td>${obj.name}</td>
+                <td>${obj.email}</td>
+                <td>${obj.phone}</td>
+                <td>${obj.address}</td>
+                <td>
+                      <button class="btn btn-secondary edit">
+                            <i class="far fa-edit"></i>
+                      </button>
+                      <button class="btn btn-danger delete">
+                          <i class="fa-solid fa-trash"></i>
+                      </button>
+                </td>
+            </tr>
+        `;
+    };
+
+    const getAllCustomer = async () => {
+      const customers = await fetchAllCustomer();
+      console.log(customers);
+
+      customers.forEach(item => {
+        const str = renderCustomer(item);
+        bodyCustomer.append(str);
+      });
+    };
+
+    getAllCustomer();
+  });
+</script>
+
+</body>
+
+</html>

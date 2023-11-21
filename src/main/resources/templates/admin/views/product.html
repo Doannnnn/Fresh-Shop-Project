@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>DASHMIN - Bootstrap Admin Template</title>
+    <th:block th:replace="/admin/layout/head :: head"/>
+</head>
+
+<body>
+<div class="">
+
+    <!-- Spinner Start -->
+    <th:block th:replace="/admin/layout/spinner :: spinner"/>
+    <!-- Spinner End -->
+
+    <!-- Sidebar Start -->
+    <th:block th:replace="/admin/layout/sidebar :: sidebar"/>
+    <!-- Sidebar End -->
+
+    <!-- Content Start -->
+    <div class="content">
+
+        <!-- Navbar Start -->
+        <th:block th:replace="/admin/layout/navbar :: navbar"/>
+        <!-- Navbar End -->
+
+        <!-- Table Start -->
+        <div class="container-fluid" >
+            <div id="main-container" style="height: 75vh">
+                <header>
+                    <nav class="navbar bg-body-tertiary">
+                        <div class="container-fluid" style="margin: 10px">
+                            <span class="navbar-brand">List Of Product</span>
+                            <div class="d-flex" style="gap: 10px;">
+                                <button class="btn btn-outline-success" data-toggle="modal" id="showModalCreate">
+                                    <i class="far fa-plus-square"></i>
+                                    Add New Product
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Expiration Date</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbProduct">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="loading" class="loading hide">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Modal Create -->
+        <th:block th:replace="/admin/views/modalCreate :: modalCreate"/>
+        <!-- Modal Create End -->
+
+        <!-- Modal Update -->
+        <th:block th:replace="/admin/views/modalUpdate :: modalUpdate"/>
+        <!-- Modal Update End -->
+
+        <!-- Table End -->
+
+        <!-- Footer Start -->
+        <th:block th:replace="/admin/layout/footer :: footer"/>
+        <!-- Footer End -->
+
+    </div>
+    <!-- Content End -->
+
+</div>
+
+<!-- JavaScript Libraries -->
+<th:block th:replace="/admin/layout/jsLibraries :: jsLibraries"/>
+<!-- JavaScript Libraries -->
+
+</body>
+
+</html>
