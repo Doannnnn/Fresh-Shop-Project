@@ -3,13 +3,14 @@ package com.example.model;
 import com.example.model.Enum.ECategory;
 import com.example.model.dto.response.ImageResDTO;
 import com.example.model.dto.response.ProductResDTO;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;

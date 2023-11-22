@@ -2,13 +2,14 @@ package com.example.model;
 
 import com.example.model.Enum.ERole;
 import com.example.model.dto.response.CustomerResDTO;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+
 import java.util.List;
 
 @NoArgsConstructor

@@ -2,13 +2,14 @@ package com.example.model;
 
 import com.example.model.dto.request.ImageReqDTO;
 import com.example.model.dto.response.ImageResDTO;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+
 
 @NoArgsConstructor
 @AllArgsConstructor

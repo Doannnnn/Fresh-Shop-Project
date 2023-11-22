@@ -9,11 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class ProductController {
 
-    @GetMapping("/product")
-    public ModelAndView showProductPage() {
-
-        return new ModelAndView("/admin/views/product");
-    }
+//    @GetMapping("/product")
+//    public ModelAndView showProductPage() {
+//
+//        return new ModelAndView("/admin/views/product");
+//    }
 
     @GetMapping("/customer")
     public ModelAndView showCustomerPage() {

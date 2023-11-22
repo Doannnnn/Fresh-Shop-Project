@@ -1,5 +1,5 @@
 package com.example.model.Enum;
 
 public enum ERole {
-    Admin, Client
+    ROLE_ADMIN, ROLE_CLIENT
 }
