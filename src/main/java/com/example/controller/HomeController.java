@@ -22,13 +22,6 @@ public class HomeController {
         return new ModelAndView("views/shop");
     }
 
-    @GetMapping("/product-detail")
-    public ModelAndView showProductDetailPage() {
-
-
-        return new ModelAndView("views/product-detail");
-    }
-
     @GetMapping("/about")
     public ModelAndView showAboutPage() {
 

@@ -260,6 +260,39 @@ function showModalUpdate(productId) {
             $('#expirationDateUpdate').val(data.expirationDate);
             $('#categoryUpdate').val(data.category);
 
+            const imagePreview = $('#image-previewUpdate');
+            imagePreview.empty();
+
+            // Lặp qua danh sách ảnh và thêm chúng vào phần tử image-preview
+            data.images.forEach(function (image) {
+                const img = $("<img>").attr("src", image.url).css({
+                    width: "200px",
+                    height: "150px",
+                    objectFit: "cover",
+                    marginRight: "10px"
+                });
+
+                const deleteIcon = $("<span>")
+                    .addClass("delete-icon")
+                    .html("&times;")
+                    .css({
+                        position: "relative",
+                        bottom: "67px",
+                        right: "8px"
+                    });
+
+                deleteIcon.click(function () {
+                    img.remove();
+                    deleteIcon.remove();
+                    const index = data.images.indexOf(image);
+                    if (index !== -1) {
+                        data.images.splice(index, 1);
+                    }
+                });
+
+                imagePreview.append(img).append(deleteIcon);
+            });
+
             $('#updateModal').modal('show');
         },
         error: function (error) {
@@ -267,6 +300,7 @@ function showModalUpdate(productId) {
         }
     });
 }
+
 
 updateButton.on('click', async function () {
     const productId = $('#productId').val();

@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,11 +22,13 @@ public class CartDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long quantity;
+
+    private BigDecimal totalAmount;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-    private Long quantity;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
