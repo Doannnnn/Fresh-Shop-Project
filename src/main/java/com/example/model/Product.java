@@ -1,7 +1,6 @@
 package com.example.model;
 
 import com.example.model.Enum.ECategory;
-import com.example.model.dto.response.ImageResDTO;
 import com.example.model.dto.response.ProductResDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
