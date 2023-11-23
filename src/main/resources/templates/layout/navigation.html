@@ -14,10 +14,10 @@
     <div class="collapse navbar-collapse" id="navbar-menu">
         <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
             <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="/shop">Product</a></li>
-            <li class="nav-item"><a class="nav-link" href="/gallery">Gallery</a></li>
-            <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/about">About</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/shop">Product</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/gallery">Gallery</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/contact">Contact</a></li>
         </ul>
     </div>
     <!-- /.navbar-collapse -->
@@ -37,22 +37,19 @@
         </ul>
     </div>
 
-    <div class="login-box" th:if="${username == null}">
-        <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
-            <option th:href="@{/register}">Register Here</option>
-            <option th:href="@{/login}">Sign In</option>
-        </select>
+    <div class="login-box" th:if="${username == null}" >
+        <a href="/login" class="btn header-btn">LOGIN</a>
     </div>
 
     <div id="user-info" th:if="${username}">
         <img id="user-avatar" src="https://e7.pngegg.com/pngimages/922/729/png-clipart-computer-icons-user-profile-business-san-giovanni-in-persiceto-logo-computer-wallpaper-thumbnail.png">
         <div class="dropdown-content" id="dropdown-menu">
             <th:block th:if="${isAdmin}">
-                <span style="border-bottom: 1px solid black;" th:text="${username} + ' - Admin'"></span>
+                <span style="border-bottom: 1px solid black;" th:text="${username} "></span>
             </th:block>
 
             <th:block th:if="${isClient}">
-                <span style="border-bottom: 1px solid black;" th:text="${username} + ' - Client'"></span>
+                <span style="border-bottom: 1px solid black;" th:text="${username} "></span>
             </th:block>
             <a href="/logout" id="logout-button">LogOut</a>
         </div>

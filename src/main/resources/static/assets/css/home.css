@@ -26,6 +26,9 @@
 
 #user-info:hover #dropdown-menu {
     display: block;
+    font-weight: bolder;
+    font-size: large;
+    color: #B0B435;
 }
 
 .dropdown-content a {
@@ -36,9 +39,23 @@
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #B0B435;
 }
 
 #logout-button {
     border-top: 1px solid #ccc;
+}
+
+.header-btn {
+    background-color: #F8F9FA;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bolder;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.header-btn:hover {
+
+    color: #b0b435;
 }

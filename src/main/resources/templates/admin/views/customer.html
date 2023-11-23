@@ -42,7 +42,7 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Address</th>
-            <th colspan="2">Action</th>
+            <th>Username</th>
           </tr>
           </thead>
           <tbody id="tbCustomer">
@@ -91,13 +91,7 @@
                 <td>${obj.email}</td>
                 <td>${obj.phone}</td>
                 <td>${obj.address}</td>
-                <td>
-                      <button class="btn btn-secondary edit">
-                            <i class="far fa-edit"></i>
-                      </button>
-                      <button class="btn btn-danger delete">
-                          <i class="fa-solid fa-trash"></i>
-                      </button>
+                <td>${obj.username}
                 </td>
             </tr>
         `;
