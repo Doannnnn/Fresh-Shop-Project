@@ -2,6 +2,7 @@ const bodyProduct = $("#tbProduct");
 const showModalCreate = $("#showModalCreate");
 const createButton = $('#createButton');
 const updateButton = $('#updateButton');
+let existingFiles = [];
 const cloudName = 'dbci5tvbu';
 const unsignedUploadPrefix = 'zympvkzi';
 const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
@@ -10,6 +11,7 @@ $('#createModal, #updateModal').on('hidden.bs.modal', function (e) {
     const modal = $(this);
 
     $('#image-preview').empty();
+    existingFiles = [];
 
     const form = modal.find('form')[0];
     form.reset();
@@ -163,7 +165,6 @@ const handleUpload = async (files) => {
 
 $(document).ready(function () {
     const preview = $("#image-preview");
-    const existingFiles = [];
 
     function addFilesToInput(input, newFiles) {
         const validNewFiles = Array.from(newFiles).filter(function (file) {

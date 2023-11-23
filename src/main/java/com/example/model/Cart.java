@@ -24,6 +24,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "cart")
-    private List<CartDetail> items;
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
+
 }

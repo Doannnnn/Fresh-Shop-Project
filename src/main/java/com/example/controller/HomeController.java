@@ -58,11 +58,6 @@ public class HomeController {
         return "admin/views/product";
     }
 
-//    @GetMapping("/shop")
-//    public ModelAndView showProductPage() {
-//
-//        return new ModelAndView("views/shop");
-//    }
 
     @GetMapping("/shop")
     public String showProductPage(Model model, Authentication authentication) {
@@ -82,12 +77,6 @@ public class HomeController {
         return "views/shop";
     }
 
-//    @GetMapping("/about")
-//    public ModelAndView showAboutPage() {
-//
-//
-//        return new ModelAndView("views/about");
-//    }
 
     @GetMapping("/about")
     public String showAboutPage(Model model, Authentication authentication) {
@@ -98,21 +87,14 @@ public class HomeController {
         String username = userDetails.getUsername();
         model.addAttribute("username", username);
 
-        // Kiểm tra vai trò và thêm vào model nếu cần
         if (userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Admin"))) {
             model.addAttribute("isAdmin", true);
         } else {
             model.addAttribute("isClient",true);
         }
         return "views/about";
-    }
 
-//    @GetMapping("/gallery")
-//    public ModelAndView showGalleryPage() {
-//
-//
-//        return new ModelAndView("views/gallery");
-//    }
+    }
 
     @GetMapping("/gallery")
     public String showGalleryPage(Model model, Authentication authentication) {
@@ -123,6 +105,7 @@ public class HomeController {
         String username = userDetails.getUsername();
         model.addAttribute("username", username);
 
+
         // Kiểm tra vai trò và thêm vào model nếu cần
         if (userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Admin"))) {
             model.addAttribute("isAdmin", true);
@@ -130,13 +113,8 @@ public class HomeController {
             model.addAttribute("isClient",true);
         }
         return "views/gallery";
+
     }
-//    @GetMapping("/contact")
-//    public ModelAndView showContactPage() {
-//
-//
-//        return new ModelAndView("views/contact");
-//    }
 
     @GetMapping("/contact")
     public String showContactPage(Model model, Authentication authentication) {
@@ -159,13 +137,11 @@ public class HomeController {
     @GetMapping("/cart")
     public ModelAndView showCartPage() {
 
-
         return new ModelAndView("views/cart");
     }
 
     @GetMapping("/checkout")
     public ModelAndView showCheckoutPage() {
-
 
         return new ModelAndView("views/checkout");
     }

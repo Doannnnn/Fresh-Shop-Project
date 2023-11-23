@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.model.dto.response.CartDetailResDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +25,10 @@ public class CartDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long quantity;
 
+    @Column(nullable = false)
     private BigDecimal totalAmount;
 
     @ManyToOne
@@ -35,4 +38,12 @@ public class CartDetail {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
+
+    public CartDetailResDTO toCardDetailResDTO(){
+        return new CartDetailResDTO()
+                .setId(id)
+                .setQuantity(quantity)
+                .setTotalAmount(totalAmount)
+                .setProduct(product.toProductResDTO());
+    }
 }

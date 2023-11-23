@@ -231,7 +231,7 @@
                                            title="Add to Wishlist"><i class="far fa-heart"></i></a>
                                     </li>
                                 </ul>
-                                <a class="cart" href="#">Add to Cart</a>
+                                <button class="cart btn hvr-hover" type="button" onclick="addCartDetail(${obj.id})">Add to Cart</button>
                             </div>
                     </div>
                     <div class="why-text">
@@ -278,7 +278,7 @@
                             <p> ☘ Sản phẩm đa dạng, minh bạch, nguồn gốc farm rõ ràng.</p>
                             <p> ☘ Sản phẩm được thu hoạch, sơ chế, đóng gói, vận chuyển và giao đến bạn trong 24h.</p>
                             <p> ☘ ${obj.description}</p>
-                            <a class="btn hvr-hover" href="#">Add to Cart</a>
+                            <button class="btn hvr-hover" type="button" onclick="addCartDetail(${obj.id})">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -309,6 +309,7 @@
             type: 'GET',
             dataType: 'json',
             success: function (data) {
+                $('#productId').text(data.id);
                 $('#name').text(data.name);
                 $('#price').text("$ " + data.price);
                 $('#description').text("☘ " + data.description);
@@ -344,6 +345,85 @@
             }
         });
     }
+
+    function addCartDetail(productId) {
+        const quantity = 1;
+        const username = $('#username').text();
+
+        const cardDetail = {
+            quantity,
+            productId,
+            username
+        };
+
+        try {
+            $.ajax({
+                url: `http://localhost:8080/api/cart-detail`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(cardDetail)
+            })
+                .done((response) => {
+                    webToast.Success({
+                        status: 'Thêm Vào giỏ hàng thành công',
+                        message: '',
+                        delay: 2000,
+                        align: 'topright'
+                    });
+                })
+                .fail((error) => {
+                    webToast.Danger({
+                        status: 'Không thành công',
+                        message: '',
+                        delay: 2000,
+                        align: 'topright'
+                    });
+                });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    $('#addCartDetailQuantity').on('click', function () {
+        const productId = $('#productId').text();
+        const quantity = $('#quantity').val();
+        const username = $('#username').text();
+
+        const cardDetail = {
+            quantity,
+            productId,
+            username
+        };
+
+        try {
+            $.ajax({
+                url: `http://localhost:8080/api/cart-detail`,
+                method: 'PATCH',
+                contentType: 'application/json',
+                data: JSON.stringify(cardDetail)
+            })
+                .done((response) => {
+                    webToast.Success({
+                        status: 'Thêm Vào giỏ hàng thành công',
+                        message: '',
+                        delay: 2000,
+                        align: 'topright'
+                    });
+
+                    $('#modelDetail').modal('hide');
+                })
+                .fail((error) => {
+                    webToast.Danger({
+                        status: 'Không thành công',
+                        message: '',
+                        delay: 2000,
+                        align: 'topright'
+                    });
+                });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 
 </script>
 
