@@ -59,7 +59,17 @@ public class HomeController {
     }
 
     @GetMapping("/shop")
-    public ModelAndView showProductPage() {
+    public ModelAndView showShopPage(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username", username);
+
+        // Kiểm tra vai trò và thêm vào model nếu cần
+        if (userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Admin"))) {
+            model.addAttribute("isAdmin", true);
+        } else {
+            model.addAttribute("isClient",true);
+        }
 
         return new ModelAndView("views/shop");
     }
@@ -67,13 +77,11 @@ public class HomeController {
     @GetMapping("/about")
     public ModelAndView showAboutPage() {
 
-
         return new ModelAndView("views/about");
     }
 
     @GetMapping("/gallery")
     public ModelAndView showGalleryPage() {
-
 
         return new ModelAndView("views/gallery");
     }
@@ -88,13 +96,11 @@ public class HomeController {
     @GetMapping("/cart")
     public ModelAndView showCartPage() {
 
-
         return new ModelAndView("views/cart");
     }
 
     @GetMapping("/checkout")
     public ModelAndView showCheckoutPage() {
-
 
         return new ModelAndView("views/checkout");
     }

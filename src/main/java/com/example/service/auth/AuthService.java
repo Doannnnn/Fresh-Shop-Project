@@ -3,10 +3,13 @@ package com.example.service.auth;
 
 
 
+import com.example.model.Cart;
 import com.example.model.Enum.ERole;
 import com.example.model.User;
+import com.example.repository.CartRepository;
 import com.example.repository.UserRepository;
 import com.example.service.auth.request.RegisterRequest;
+import com.example.service.cart.ICartService;
 import com.example.utils.AppUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,11 +34,17 @@ public class AuthService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private CartRepository cartRepository;
+
     public void register(RegisterRequest request){
         var user = AppUtils.mapper.map(request, User.class);
         user.setRole(ERole.ROLE_CLIENT);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartRepository.save(cart);
     }
 
     public boolean checkUsernameOrPhoneNumberOrEmail(RegisterRequest request, BindingResult result){
