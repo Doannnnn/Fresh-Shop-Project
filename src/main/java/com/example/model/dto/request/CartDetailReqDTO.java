@@ -1,5 +1,6 @@
 package com.example.model.dto.request;
 
+import com.example.model.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,27 @@ public class CartDetailReqDTO implements Validator {
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(Object o, Errors errors) {
+        CartDetailReqDTO cartDetailReqDTO = (CartDetailReqDTO) o;
+        String quantityStr = cartDetailReqDTO.getQuantity();
 
+        if (quantityStr == null || quantityStr.isEmpty()) {
+            errors.rejectValue("quantity", "quantity.null", "Nhập số lượng.");
+            return;
+        }
+
+        try {
+            Long quantity = Long.parseLong(quantityStr);
+
+            if (quantity <= 0) {
+                errors.rejectValue("quantity", "quantity.zero", "Số lượng phải lớn hơn 0.");
+                return;
+            }
+            if (quantity >= 20) {
+                errors.rejectValue("quantity", "quantity.max", "Số lượng phải nhỏ hơn hoặc bằng 20.");
+            }
+        } catch (NumberFormatException e) {
+            errors.rejectValue("quantity", "quantity.invalid", "Số lượng không hợp lệ.");
+        }
     }
 }

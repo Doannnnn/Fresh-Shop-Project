@@ -37,15 +37,11 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th></th>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
+                        <th>Shipping Method</th>
+                        <th>User Name</th>
                         <th>Total</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Status</th>
+                        <th>Detail</th>
                     </tr>
                     </thead>
                     <tbody id="tbBill">
@@ -71,6 +67,102 @@
 <!-- JavaScript Libraries -->
 <th:block th:replace="/admin/layout/jsLibraries :: jsLibraries"/>
 <!-- JavaScript Libraries -->
+
+<!-- Modal Bill Detail -->
+<th:block th:replace="/admin/views/modalDetail :: modalDetail"/>
+<!-- Modal Bill Detail End -->
+
+<script>
+    $(document).ready(function() {
+        const bodyBill = $("#tbBill");
+
+        const fetchAllBill = async () => {
+            try {
+                return await $.ajax({
+                    url: "http://localhost:8080/api/bill",
+                    method: "GET",
+                    dataType: "json"
+                });
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        const renderBill = (obj) => {
+            return `
+            <tr>
+                <td>${obj.id}</td>
+                <td>${obj.shippingMethod}</td>
+                <td>${obj.user.fullName}</td>
+                <td>${obj.total}</td>
+                <td>
+                    <button class="btn btn-secondary" onclick="showModalBillDetail(${obj.id})">
+                          <i class="far fa-edit"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+        };
+
+        const getAllBill = async () => {
+            const customers = await fetchAllBill();
+            console.log(customers);
+
+            customers.forEach(item => {
+                const str = renderBill(item);
+                bodyBill.append(str);
+            });
+        };
+
+        getAllBill();
+    });
+
+
+    function showModalBillDetail(billId){
+        const bodyBillDetail = $("#tbBillDetail");
+
+        const fetchAllBillDetail = async () => {
+            try {
+                return await $.ajax({
+                    url: `http://localhost:8080/api/bill/${billId}`,
+                    method: "PATCH",
+                    dataType: "json"
+                });
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        const renderBill = (obj) => {
+            return`
+            <tr>
+                <th>${obj.id}</th>
+                <td><img src="${obj.images[0].url}" alt="" style="width: 100px; height: 70px"></td>
+                <th>${obj.billDetail.product.name}</th>
+                <th>${obj.billDetail.product.price}</th>
+                <th>${obj.billDetail.quantity}</th>
+                <th>${obj.billDetail.total}</th>
+            </tr>
+        `;
+        };
+
+        const getAllBillDetail = async () => {
+            const customers = await fetchAllBillDetail();
+            console.log(customers);
+
+            customers.forEach(item => {
+                const str = renderBill(item);
+                bodyBillDetail.append(str);
+            });
+        };
+
+        getAllBillDetail();
+
+        $('#modalDetail').modal('show');
+    }
+</script>
+
+
 
 </body>
 

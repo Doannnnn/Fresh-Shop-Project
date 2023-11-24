@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
 
@@ -135,15 +134,22 @@ public class HomeController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView showCartPage() {
+    public String showCartPage(Model model, Authentication authentication) {
+        if(authentication == null){
+            return "views/cart";
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username", username);
 
-        return new ModelAndView("views/cart");
-    }
+        // Kiểm tra vai trò và thêm vào model nếu cần
+        if (userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Admin"))) {
+            model.addAttribute("isAdmin", true);
+        } else {
+            model.addAttribute("isClient",true);
+        }
 
-    @GetMapping("/checkout")
-    public ModelAndView showCheckoutPage() {
-
-        return new ModelAndView("views/checkout");
+        return "views/cart";
     }
 
 }
