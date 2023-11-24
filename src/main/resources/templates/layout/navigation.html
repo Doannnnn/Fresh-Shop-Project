@@ -49,12 +49,10 @@
             </th:block>
 
             <th:block th:if="${isClient}">
-<<<<<<< HEAD
+
                 <span style="border-bottom: 1px solid black;" th:text="${username} "></span>
-=======
-                <span style="border-bottom: 1px solid black;" th:text="${username} + ' - Client'"></span>
                 <div id="username" style="display: none" th:text="${username}"></div>
->>>>>>> doan
+
             </th:block>
             <a href="/logout" id="logout-button">LogOut</a>
         </div>
