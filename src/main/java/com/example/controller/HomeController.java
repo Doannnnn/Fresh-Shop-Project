@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
 
@@ -136,6 +135,7 @@ public class HomeController {
 
 
 
+
     @GetMapping("/cart")
     public String showCartPage(Model model, Authentication authentication) {
         if(authentication == null){
@@ -151,14 +151,6 @@ public class HomeController {
             model.addAttribute("isClient",true);
         }
         return "views/cart";
-
-
-    }
-
-    @GetMapping("/checkout")
-    public ModelAndView showCheckoutPage() {
-
-        return new ModelAndView("views/checkout");
     }
 
 }

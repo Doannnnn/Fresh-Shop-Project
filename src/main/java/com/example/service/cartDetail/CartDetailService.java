@@ -55,7 +55,7 @@ public class CartDetailService implements ICartDetailService {
 
     @Override
     public Optional<CartDetail> findById(Long id) {
-        return Optional.empty();
+        return cartDetailRepository.findById(id);
     }
 
     @Override
@@ -98,6 +98,6 @@ public class CartDetailService implements ICartDetailService {
 
     @Override
     public void deleteById(Long id) {
-
+        cartDetailRepository.deleteById(id);
     }
 }

@@ -2144,7 +2144,7 @@
  .my-account-box-main{
      padding: 70px 0px;
 }
- .shopping-box a{
+ .shopping-box a, .shopping-box button{
      font-size: 18px;
      color: #ffffff;
      border: none;
@@ -2212,7 +2212,7 @@
  .custom-control-input:focus ~ .custom-control-label::before{
      box-shadow: none;
 }
- .odr-box a {
+ .odr-box a, .odr-box h6 {
      font-size: 18px;
      color: #111111;
      font-weight: 700;
@@ -2594,6 +2594,15 @@
 	font-weight: 700;
 	padding: 12px 25px;
 	border: none;
+}
+
+.error-message {
+    margin: 5px;
+    color: #fa0d0d;
+}
+
+.error {
+    border: 1px solid #fa0d0d !important;
 }
 
 

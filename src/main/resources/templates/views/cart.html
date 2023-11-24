@@ -83,12 +83,18 @@
         </div>
 
         <div class="row my-5">
-            <div class="col-12 d-flex shopping-box"><a href="/checkout" class="ml-auto btn hvr-hover">Order</a> </div>
+            <div class="col-12 d-flex shopping-box">
+                <button type="button" class="ml-auto btn hvr-hover" id="orderButton">Order</button>
+            </div>
         </div>
 
     </div>
 </div>
 <!-- End Cart -->
+
+<!-- Modal Order  -->
+<th:block th:replace="views/modal-order :: modal-order"/>
+<!-- Modal Order End  -->
 
 <!-- Start Instagram Feed  -->
 <th:block th:replace="layout/instagram :: instagram"/>
@@ -117,7 +123,7 @@
 
         const renderCartDetail = (obj) => {
             return `
-            <tr>
+            <tr id="tr_${obj.id}">
                             <td class="thumbnail-img">
                                 <a href="#">
                                     <img class="img-fluid" src="${obj.product.images[0].url}" alt="" />
@@ -136,9 +142,9 @@
                                 <p>${"$ " + obj.totalAmount}</p>
                             </td>
                             <td class="remove-pr">
-                                <a href="#">
+                                <button class="btn btn-outline-danger" onclick="deleteCartDetail(${obj.id})">
                                     <i class="fas fa-times"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>
             `;
@@ -156,6 +162,87 @@
 
         getAllCartDetail();
     });
+
+    $("#orderButton").on("click", function () {
+        const bodyCartDetailOrder = $("#tbCartDetailOrder");
+        const username = $('#username').text();
+        const shippingCostDisplay = $('#shipping');
+        const grandTotalDisplay = $('#total');
+
+        const fetchAllCartDetailOrder = async () => {
+            try {
+                return await $.ajax({
+                    url: `http://localhost:8080/api/cart-detail/${username}`,
+                    method: "GET",
+                    dataType: "json"
+                });
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        const renderCartDetailOrder = (obj) => {
+            return`
+            <div class="media mb-2 border-bottom">
+                <div class="media-body"><h6> ${obj.product.name}</h6>
+                    <div class="small text-muted">Price: $ ${obj.product.price} <span class="mx-2">|</span> Quantity: ${obj.quantity} <span
+                        class="mx-2">|</span> Subtotal: $ ${obj.totalAmount}
+                    </div>
+                </div>
+            </div>
+            `;
+        };
+
+        const calculateGrandTotal = (cartDetailOrder, shippingCostValue = 0) => {
+            let totalAmount = 0;
+            cartDetailOrder.forEach(item => {
+                totalAmount += item.totalAmount;
+            });
+
+            const taxRate = 0.03; // 3%
+            const shippingCost = shippingCostValue;
+
+            const tax = totalAmount * taxRate;
+            const grandTotal = totalAmount + tax + shippingCost;
+
+            grandTotalDisplay.text(`$ ${grandTotal.toFixed(2)}`);
+        };
+
+        const getAllCartDetailOrder = async () => {
+            const cartDetailOrder = await fetchAllCartDetailOrder();
+            console.log(cartDetailOrder);
+
+            cartDetailOrder.forEach(item => {
+                const str = renderCartDetailOrder(item);
+                bodyCartDetailOrder.append(str);
+            });
+
+            calculateGrandTotal(cartDetailOrder);
+        };
+
+        getAllCartDetailOrder();
+
+        $('input[name="shipping-option"]').change(async function() {
+            const selectedOption = $('input[name="shipping-option"]:checked');
+            const shippingCostElement = selectedOption.next().next();
+            const shippingCostValue = parseFloat(shippingCostElement.text().replace('$', '')) || 0;
+
+            if (shippingCostElement.text().trim().toUpperCase() === 'FREE') {
+                shippingCostDisplay.text('FREE');
+                calculateGrandTotal(await fetchAllCartDetailOrder(), 0);
+            } else {
+                shippingCostDisplay.text(`$ ${shippingCostValue.toFixed(2)}`);
+                calculateGrandTotal(await fetchAllCartDetailOrder(), shippingCostValue);
+            }
+        });
+
+        $("#modelOrder").modal("show");
+    });
+
+    $("#modelOrder").on("hidden.bs.modal", function () {
+        $("#tbCartDetailOrder").empty();
+    });
+
 </script>
 
 </body>

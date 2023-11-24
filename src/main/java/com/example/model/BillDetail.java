@@ -1,5 +1,7 @@
 package com.example.model;
 
+import com.example.model.dto.response.BillDetailResDTO;
+import com.example.model.dto.response.BillResDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +36,12 @@ public class BillDetail {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    public BillDetailResDTO toBillDetailResDTO(){
+        return new BillDetailResDTO()
+                .setId(id)
+                .setQuantity(quantity)
+                .setTotal(total)
+                .setProduct(product.toProductResDTO());
+    }
 }
