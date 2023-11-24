@@ -30,7 +30,7 @@
             <li class="side-menu">
                 <a href="#">
                     <i class="fa fa-shopping-bag"></i>
-                    <span class="badge">3</span>
+                    <span class="badge" id="quantityCartDetail"></span>
                     <p>My Cart</p>
                 </a>
             </li>
@@ -49,12 +49,8 @@
             </th:block>
 
             <th:block th:if="${isClient}">
-<<<<<<< HEAD
                 <span style="border-bottom: 1px solid black;" th:text="${username} "></span>
-=======
-                <span style="border-bottom: 1px solid black;" th:text="${username} + ' - Client'"></span>
                 <div id="username" style="display: none" th:text="${username}"></div>
->>>>>>> doan
             </th:block>
             <a href="/logout" id="logout-button">LogOut</a>
         </div>
@@ -68,10 +64,6 @@
     <li class="cart-box">
         <ul class="cart-list" id="tbCartDetail">
 
-            <li class="total">
-                <a href="/cart" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                <span class="float-right"><strong>Total</strong>: $180.00</span>
-            </li>
         </ul>
     </li>
 </div>

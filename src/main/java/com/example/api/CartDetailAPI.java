@@ -1,5 +1,6 @@
 package com.example.api;
 
+import com.example.exception.DataInputException;
 import com.example.model.CartDetail;
 import com.example.model.Product;
 import com.example.model.dto.request.CartDetailReqDTO;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cart-detail")
@@ -62,6 +64,18 @@ public class CartDetailAPI {
         CartDetailResDTO cartDetailResDTO = cartDetail.toCardDetailResDTO();
 
         return new ResponseEntity<>(cartDetailResDTO, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{cartDetailId}")
+    public ResponseEntity<?> deleted(@PathVariable Long cartDetailId) {
+        Optional<CartDetail> existingCartDetail = cartDetailService.findById(cartDetailId);
+
+        if (existingCartDetail.isPresent()) {
+            cartDetailService.deleteById(cartDetailId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("CartDetail not found", HttpStatus.NOT_FOUND);
+        }
     }
 
 }
