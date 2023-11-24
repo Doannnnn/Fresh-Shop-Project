@@ -156,11 +156,24 @@ public class HomeController {
         return "views/contact";
     }
 
+
+
     @GetMapping("/cart")
-    public ModelAndView showCartPage() {
+    public String showCartPage(Model model, Authentication authentication) {
+        if(authentication == null){
+            return "views/cart";
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username", username);
 
-
-        return new ModelAndView("views/cart");
+        // Kiểm tra vai trò và thêm vào model nếu cần
+        if (userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Admin"))) {
+            model.addAttribute("isAdmin", true);
+        } else {
+            model.addAttribute("isClient",true);
+        }
+        return "views/cart";
     }
 
     @GetMapping("/checkout")
