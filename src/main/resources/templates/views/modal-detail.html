@@ -45,6 +45,7 @@
                                 </div>
                                 <div class="col-xl-7 col-lg-7 col-md-6">
                                     <div class="single-product-details">
+                                        <div id="productId" style="display: none"></div>
                                         <h2 id="name"> </h2>
                                         <h5 id="price"> </h5>
                                         <p class="available-stock"><span> Hơn 20 có sẵn / <a href="#">8 đã bán </a></span><p>
@@ -57,14 +58,14 @@
                                             <li>
                                                 <div class="form-group quantity-box">
                                                     <label class="control-label">Số lượng / kg</label>
-                                                    <input class="form-control" value="0" min="0" max="20" type="number">
+                                                    <input id="quantity" class="form-control" value="0" min="0" max="20" type="number">
                                                 </div>
                                             </li>
                                         </ul>
 
                                         <div class="price-box-bar">
                                             <div class="cart-and-bay-btn">
-                                                <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
+                                                    <button class="btn hvr-hover" data-fancybox-close="" type="button" id="addCartDetailQuantity">Add to cart</button>
                                             </div>
                                         </div>
 

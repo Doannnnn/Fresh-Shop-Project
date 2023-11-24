@@ -25,10 +25,13 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "bill")
-    private List<BillDetail> items;
-
     private BigDecimal total;
 
     private LocalDateTime createdTime;
+
+    @OneToMany(mappedBy = "bill")
+    private List<BillDetail> items;
+
+    @ManyToOne
+    private User user;
 }
