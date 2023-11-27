@@ -194,8 +194,9 @@
 
 <!-- Start Footer  -->
 <th:block th:replace="layout/footer :: footer"/>
+<script src="/assets/js/shop.js"></script>
 
-<script>
+<script  th:inline="javascript">
     $(document).ready(function() {
         const bodyProduct = $("#tbProduct");
         const tableProduct = $("#list-view")
@@ -302,6 +303,15 @@
 
         getAllProduct();
     });
+
+    function checkUserIsExist(){
+        // Lấy giá trị của biến "username"
+        let username = /*[[${username}]]*/ '';
+        if(username){
+            return true;
+        }
+        return false;
+    }
 
     function showModalDetail(productId) {
         $.ajax({

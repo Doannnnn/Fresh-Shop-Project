@@ -31,7 +31,7 @@ public class SpringSecurity {
                         authorize.requestMatchers("/register/**").permitAll()
 
                                 .requestMatchers("/home","/shop","/about","/gallery","/contact").permitAll()
-                                .requestMatchers("/product").hasRole("ADMIN")
+                                .requestMatchers("/product","/dashboard","/bill","/customer").hasRole("ADMIN")
 //                                .requestMatchers("/stylist").hasRole("ADMIN")
 //                                .requestMatchers("/serviceHair").hasRole("ADMIN")
                                 .requestMatchers("/api/**").permitAll()
