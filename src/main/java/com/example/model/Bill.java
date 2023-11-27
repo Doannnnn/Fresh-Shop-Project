@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.model.Enum.EStatus;
 import com.example.model.dto.response.BillResDTO;
 import com.example.model.dto.response.ProductResDTO;
 import jakarta.persistence.*;
@@ -32,6 +33,9 @@ public class Bill {
     private BigDecimal total;
 
     private String shippingMethod;
+
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
 
     @ManyToOne
     private User user;

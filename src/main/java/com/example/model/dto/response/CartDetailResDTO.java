@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class CartDetailResDTO implements Validator {
+public class CartDetailResDTO {
 
     private Long id;
 
@@ -26,13 +26,4 @@ public class CartDetailResDTO implements Validator {
 
     private ProductResDTO product;
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-
-    }
 }

@@ -1,6 +1,8 @@
 const bodyCartDetail = $("#tbCartDetail");
+const bodyBill = $("#tbBill");
 const username = $(`#username`).text();
 const quantityCartDetail = $('#quantityCartDetail');
+const quantityBill = $('#quantityBill');
 const fetchAllCartDetail = async () => {
     try {
         return await $.ajax({
@@ -221,6 +223,7 @@ $("#placeOrder").on("click", function () {
                 $("#tbCartDetails").empty();
                 $('#tbCartDetail').empty();
                 getAllCartDetail();
+                getAllBill();
 
                 $('#modelOrder').modal('hide');
             })
@@ -236,6 +239,76 @@ $("#placeOrder").on("click", function () {
         console.error('Error:', error);
     }
 });
+
+const fetchAllBill = async () => {
+    try {
+        return await $.ajax({
+            url: `http://localhost:8080/api/bill/${username}`,
+            method: "GET",
+            dataType: "json"
+        });
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+
+const renderBill = (obj) => {
+    return `
+            <tr>
+                <td>${obj.id}</td>
+                <td>${obj.user.fullName}</td>
+                <td>${obj.user.address}</td>
+                <td>${obj.user.phoneNumber}</td>
+                <td>${obj.shippingMethod}</td>
+                <td>${obj.status}</td>
+                <td>${obj.total}</td>
+                <td>
+                    <button class="btn btn-secondary" onclick="showModalBillDetails(${obj.id})">
+                          <i class="far fa-edit"></i>
+                    </button>
+                </td>
+            </tr>
+            `;
+};
+
+const totalQuantityBill = (bills) => {
+    const totalQuantity = bills.length;
+    quantityBill.text(totalQuantity.toString());
+};
+
+const getAllBill = async () => {
+    const bills = await fetchAllBill();
+    console.log(bills);
+
+    bills.forEach(item => {
+        const str = renderBill(item);
+        bodyBill.append(str);
+    });
+
+    totalQuantityBill(bills)
+};
+
+getAllBill();
+
+function changeQuantity(cartDetailId) {
+    const newQuantity = parseInt($('#newQuantity').val());
+
+    $.ajax({
+        url: `http://localhost:8080/api/cart-detail/${cartDetailId}`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(newQuantity),
+        success: function(response) {
+            console.log('Quantity changed successfully');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Failed to change quantity:', textStatus, errorThrown);
+        }
+    });
+}
+
+
+
 
 
 

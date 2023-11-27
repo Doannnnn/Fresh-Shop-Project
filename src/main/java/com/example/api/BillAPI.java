@@ -1,9 +1,13 @@
 package com.example.api;
 
 import com.example.model.Bill;
+import com.example.model.CartDetail;
+import com.example.model.Enum.EStatus;
 import com.example.model.dto.request.BillReqDTO;
+import com.example.model.dto.response.BillDetailResDTO;
 import com.example.model.dto.response.BillResDTO;
 import com.example.service.bill.IBillService;
+import com.example.service.billDetail.IBillDetailService;
 import com.example.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bill")
@@ -19,6 +24,9 @@ public class BillAPI {
 
     @Autowired
     private IBillService billService;
+
+    @Autowired
+    private IBillDetailService billDetailService;
 
     @Autowired
     private AppUtils appUtils;
@@ -38,11 +46,10 @@ public class BillAPI {
     }
 
     @PatchMapping("/{billId}")
-    public ResponseEntity<?> findById(@PathVariable Long billId) {
-        Bill bill = billService.findById(billId).get();
-        BillResDTO billResDTOS = bill.toBillResDTO();
+    public ResponseEntity<?> findAllBillDetailByBillId(@PathVariable Long billId) {
+        List<BillDetailResDTO> billDetailResDTOS = billDetailService.findAllByBillId(billId);
 
-        return new ResponseEntity<>(billResDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(billDetailResDTOS, HttpStatus.OK);
     }
 
     @PostMapping
@@ -58,5 +65,18 @@ public class BillAPI {
         BillResDTO billResDTO = bill.toBillResDTO();
 
         return new ResponseEntity<>(billResDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{billId}")
+    public ResponseEntity<?> updateStatus(@PathVariable Long billId, @RequestBody String newStatus) {
+
+        Optional<Bill> existingBill = billService.findById(billId);
+
+        if (existingBill.isPresent()) {
+            billService.updateStatus(billId, EStatus.valueOf(newStatus));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Bill not found", HttpStatus.NOT_FOUND);
+        }
     }
 }

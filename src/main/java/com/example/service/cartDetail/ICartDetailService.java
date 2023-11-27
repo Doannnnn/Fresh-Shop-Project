@@ -12,4 +12,6 @@ public interface ICartDetailService extends IGeneralService <CartDetail, Long> {
     List<CartDetailResDTO> findAllCartDetailByUser(String username);
 
     CartDetail create(CartDetailReqDTO cartDetailReqDTO);
+
+    void changeQuantity(Long id, Long newQuantity);
 }

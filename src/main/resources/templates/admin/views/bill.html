@@ -38,8 +38,11 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Shipping Method</th>
                         <th>User Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Shipping Method</th>
+                        <th style="padding-right: 67px">Status</th>
                         <th>Total</th>
                         <th>Detail</th>
                     </tr>
@@ -73,6 +76,9 @@
 <!-- Modal Bill Detail End -->
 
 <script>
+
+    let count = 0;
+
     $(document).ready(function() {
         const bodyBill = $("#tbBill");
 
@@ -89,20 +95,32 @@
         };
 
         const renderBill = (obj) => {
-            return `
-            <tr>
-                <td>${obj.id}</td>
-                <td>${obj.shippingMethod}</td>
-                <td>${obj.user.fullName}</td>
-                <td>${obj.total}</td>
-                <td>
-                    <button class="btn btn-secondary" onclick="showModalBillDetail(${obj.id})">
-                          <i class="far fa-edit"></i>
-                    </button>
-                </td>
-            </tr>
-        `;
+            return`
+                <tr>
+                    <td>${obj.id}</td>
+                    <td>${obj.user.fullName}</td>
+                    <td>${obj.user.address}</td>
+                    <td>${obj.user.phoneNumber}</td>
+                    <td>${obj.shippingMethod}</td>
+                    <td>
+                        <select id="status" class="form-control bill-status" style="width: 70%"
+                                onchange="updateStatus(${obj.id})">
+                            <option ${obj.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option ${obj.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                            <option ${obj.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                            <option ${obj.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </td>
+                    <td>${obj.total}</td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="showModalBillDetail(${obj.id})">
+                            <i class="far fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
         };
+
 
         const getAllBill = async () => {
             const customers = await fetchAllBill();
@@ -116,7 +134,6 @@
 
         getAllBill();
     });
-
 
     function showModalBillDetail(billId){
         const bodyBillDetail = $("#tbBillDetail");
@@ -133,15 +150,16 @@
             }
         };
 
+
         const renderBill = (obj) => {
+            count++;
             return`
             <tr>
-                <th>${obj.id}</th>
-                <td><img src="${obj.images[0].url}" alt="" style="width: 100px; height: 70px"></td>
-                <th>${obj.billDetail.product.name}</th>
-                <th>${obj.billDetail.product.price}</th>
-                <th>${obj.billDetail.quantity}</th>
-                <th>${obj.billDetail.total}</th>
+                <th>${count}</th>
+                <th>${obj.product.name}</th>
+                <th>${obj.product.price}</th>
+                <th>${obj.quantity}</th>
+                <th>${obj.total}</th>
             </tr>
         `;
         };
@@ -160,9 +178,31 @@
 
         $('#modalDetail').modal('show');
     }
+
+    $("#modalDetail").on("hidden.bs.modal", function () {
+        $("#tbBillDetail").empty();
+
+        count = 0;
+    });
+
+    function updateStatus(billId) {
+        const newStatus = $('#status').val();
+
+        $.ajax({
+            url: `http://localhost:8080/api/bill/${billId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: newStatus,
+            success: function(response) {
+                console.log('Đã thay đổi trạng thái thành công');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Không thể thay đổi trạng thái:', textStatus, errorThrown);
+            }
+        });
+    }
+
 </script>
-
-
 
 </body>
 

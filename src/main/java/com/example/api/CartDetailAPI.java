@@ -78,4 +78,17 @@ public class CartDetailAPI {
         }
     }
 
+    @PutMapping("/{cartDetailId}")
+    public ResponseEntity<?> changeQuantity(@PathVariable Long cartDetailId, @RequestBody String newQuantity) {
+
+        Optional<CartDetail> existingCartDetail = cartDetailService.findById(cartDetailId);
+
+        if (existingCartDetail.isPresent()) {
+            cartDetailService.changeQuantity(cartDetailId, Long.valueOf(newQuantity));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("CartDetail not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
