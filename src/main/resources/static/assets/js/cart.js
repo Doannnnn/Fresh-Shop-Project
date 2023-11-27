@@ -54,6 +54,15 @@ const getAllCartDetail = async () => {
 getAllCartDetail();
 
 function addCartDetail(productId) {
+    if(!checkUserIsExist()){
+        webToast.Danger({
+            status: 'Please login to add product to cart!',
+            message: '',
+            delay: 3000,
+            align: 'topcenter'
+        });
+        return;
+    }
     const quantity = 1;
     const username = $('#username').text();
 
