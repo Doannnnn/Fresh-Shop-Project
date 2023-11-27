@@ -26,7 +26,7 @@ public class ProductController {
         String username = userDetails.getUsername();
         model.addAttribute("username", username);
         model.addAttribute("isAdmin",true);
-        return "/admin/views/  user";
+        return "/admin/views/user";
     }
 
     @GetMapping("/dashboard")
