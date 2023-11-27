@@ -152,4 +152,23 @@ public class HomeController {
         return "views/cart";
     }
 
+    @GetMapping("/bills")
+    public String showBillPage(Model model, Authentication authentication) {
+        if(authentication == null){
+            return "views/bills";
+        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        model.addAttribute("username", username);
+
+        // Kiểm tra vai trò và thêm vào model nếu cần
+        if (userDetails.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Admin"))) {
+            model.addAttribute("isAdmin", true);
+        } else {
+            model.addAttribute("isClient",true);
+        }
+
+        return "views/bills";
+    }
+
 }

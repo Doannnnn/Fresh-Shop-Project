@@ -37,7 +37,7 @@
             <div class="col-lg-12">
                 <h2>Cart</h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
                     <li class="breadcrumb-item active">Cart</li>
                 </ul>
             </div>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-main table-responsive">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                         <tr>
                             <th>Images</th>
@@ -122,31 +122,31 @@
         };
 
         const renderCartDetail = (obj) => {
-            return `
+            return`
             <tr id="tr_${obj.id}">
-                            <td class="thumbnail-img">
-                                <a href="#">
-                                    <img class="img-fluid" src="${obj.product.images[0].url}" alt="" />
-                                </a>
-                            </td>
-                            <td class="name-pr">
-                                <a href="#">
-                                    ${obj.product.name}
-                                </a>
-                            </td>
-                            <td class="price-pr">
-                                <p>${"$ " + obj.product.price}</p>
-                            </td>
-                            <td class="quantity-box"><input type="number" size="4" value="${obj.quantity}" min="0" step="1" class="c-input-text qty text"></td>
-                            <td class="total-pr">
-                                <p>${"$ " + obj.totalAmount}</p>
-                            </td>
-                            <td class="remove-pr">
-                                <button class="btn btn-outline-danger" onclick="deleteCartDetail(${obj.id})">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </td>
-                        </tr>
+                <td class="thumbnail-img">
+                    <a href="#">
+                        <img class="img-fluid" src="${obj.product.images[0].url}" alt=""/>
+                    </a>
+                </td>
+                <td class="name-pr">
+                    <a href="#">
+                        ${obj.product.name}
+                    </a>
+                </td>
+                <td class="price-pr">
+                    <p>${"$ " + obj.product.price}</p>
+                </td>
+                <td class="quantity-box"><input type="number" size="4" value="${obj.quantity}" min="0" step="1" class="c-input-text qty text" id="newQuantity" oninput="changeQuantity(${obj.id})"></td>
+                <td class="total-pr">
+                    <p>${"$ " + obj.totalAmount}</p>
+                </td>
+                <td class="remove-pr">
+                    <button class="btn btn-outline-danger" onclick="deleteCartDetail(${obj.id})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+            </tr>
             `;
         };
 
@@ -199,7 +199,7 @@
                 totalAmount += item.totalAmount;
             });
 
-            const taxRate = 0.03; // 3%
+            const taxRate = 0.05; // 5%
             const shippingCost = shippingCostValue;
 
             const tax = totalAmount * taxRate;

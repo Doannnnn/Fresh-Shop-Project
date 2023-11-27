@@ -1,6 +1,7 @@
 package com.example.service.bill;
 
 import com.example.model.*;
+import com.example.model.Enum.EStatus;
 import com.example.model.dto.request.BillReqDTO;
 import com.example.model.dto.response.BillResDTO;
 import com.example.repository.*;
@@ -41,7 +42,7 @@ public class BillService implements IBillService{
     @Override
     public List<BillResDTO> findAllBillResDTO() {
         return billRepository.findAll().stream().map(e ->
-                new BillResDTO(e.getId(), e.getTotal(), e.getShippingMethod(), e.getUser(), e.getBillDetails().stream().map(BillDetail::toBillDetailResDTO).collect(Collectors.toList()))
+                new BillResDTO(e.getId(), e.getTotal(), e.getShippingMethod(), e.getStatus(), e.getUser(), e.getBillDetails().stream().map(BillDetail::toBillDetailResDTO).collect(Collectors.toList()))
         ).collect(Collectors.toList());
     }
 
@@ -53,7 +54,7 @@ public class BillService implements IBillService{
             List<Bill> bills = billRepository.findAllByUser_Id(user.getId());
 
             return bills.stream().map(e ->
-                    new BillResDTO(e.getId(), e.getTotal(), e.getShippingMethod(), e.getUser(), e.getBillDetails().stream().map(BillDetail::toBillDetailResDTO).collect(Collectors.toList()))
+                    new BillResDTO(e.getId(), e.getTotal(), e.getShippingMethod(), e.getStatus(), e.getUser(), e.getBillDetails().stream().map(BillDetail::toBillDetailResDTO).collect(Collectors.toList()))
             ).collect(Collectors.toList());
         } else {
             return null;
@@ -76,6 +77,7 @@ public class BillService implements IBillService{
         Bill bill = new Bill();
         bill.setTotal(total);
         bill.setShippingMethod(shippingMethod);
+        bill.setStatus(EStatus.valueOf("Pending"));
         bill.setUser(user);
         billRepository.save(bill);
 
@@ -94,6 +96,11 @@ public class BillService implements IBillService{
         cartDetailRepository.deleteAllByCart_Id(cart.getId());
 
         return bill;
+    }
+
+    @Override
+    public void updateStatus(Long id, EStatus newStatus) {
+        billRepository.updateStatus(id, newStatus);
     }
 
     @Override

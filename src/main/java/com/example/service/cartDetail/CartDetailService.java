@@ -97,6 +97,11 @@ public class CartDetailService implements ICartDetailService {
     }
 
     @Override
+    public void changeQuantity(Long id, Long newQuantity) {
+        cartDetailRepository.changeQuantity(id, newQuantity);
+    }
+
+    @Override
     public void deleteById(Long id) {
         cartDetailRepository.deleteById(id);
     }

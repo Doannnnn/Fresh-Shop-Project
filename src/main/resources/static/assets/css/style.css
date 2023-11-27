@@ -2039,6 +2039,7 @@
      padding: 70px 0px;
 }
  .table-main table thead{
+     text-align: center;
      background: #b0b435;
      color: #ffffff;
 }
@@ -2051,6 +2052,7 @@
  .table-main table td{
      vertical-align: middle;
      font-size: 16px;
+     text-align: center;
 }
  .quantity-box input{
      width: 60px;
@@ -2586,6 +2588,7 @@
  .table-responsive .table td, .table-responsive .table th {
      vertical-align: middle;
      white-space: nowrap;
+     text-align: center;
 }
  
 .card-outline-secondary .card-body a{

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ThewayShop - Ecommerce Bootstrap 4 HTML Template</title>
+    <th:block th:replace="layout/head :: head"/>
+</head>
+
+<body>
+
+<!-- Start Main Top -->
+<header class="main-header">
+    <!-- Start Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <th:block th:replace="layout/navigation :: navigation"/>
+    </nav>
+    <!-- End Navigation -->
+</header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div class="top-search">
+    <div class="container">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Search">
+            <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+        </div>
+    </div>
+</div>
+<!-- End Top Search -->
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Bill</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+                    <li class="breadcrumb-item active">Bill</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+
+<!-- Start Bill  -->
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Shipping Method</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Detail</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbBill">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled"><a class="page-link" href="#"> < </span></a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#"> > </a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- End Bill -->
+
+<!-- Modal BillDetail  -->
+<th:block th:replace="views/modal-billDetail :: modal-billDetail"/>
+<!-- Modal BillDetail End  -->
+
+<!-- Start Instagram Feed  -->
+<th:block th:replace="layout/instagram :: instagram"/>
+<!-- End Instagram Feed  -->
+
+<!-- Start Footer  -->
+<th:block th:replace="layout/footer :: footer"/>
+
+<script>
+    let countId = 0;
+
+    function showModalBillDetails(billId){
+        const bodyBillDetails = $("#tbBillDetails");
+
+        const fetchAllBillDetails = async () => {
+            try {
+                return await $.ajax({
+                    url: `http://localhost:8080/api/bill/${billId}`,
+                    method: "PATCH",
+                    dataType: "json"
+                });
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+
+        const renderBills = (obj) => {
+            countId++;
+            return`
+            <tr>
+                <th>${countId}</th>
+                <th>${obj.product.name}</th>
+                <th>${obj.product.price}</th>
+                <th>${obj.quantity}</th>
+                <th>${obj.total}</th>
+            </tr>
+        `;
+        };
+
+        const getAllBillDetails = async () => {
+            const customers = await fetchAllBillDetails();
+            console.log(customers);
+
+            customers.forEach(item => {
+                const str = renderBills(item);
+                bodyBillDetails.append(str);
+            });
+        };
+
+        getAllBillDetails();
+
+        $('#modelBillDetail').modal('show');
+    }
+
+    $("#modelBillDetail").on("hidden.bs.modal", function () {
+        $("#tbBillDetails").empty();
+
+        countId = 0;
+    });
+
+</script>
+
+</body>
+</html>

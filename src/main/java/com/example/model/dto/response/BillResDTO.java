@@ -1,5 +1,6 @@
 package com.example.model.dto.response;
 
+import com.example.model.Enum.EStatus;
 import com.example.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,8 @@ public class BillResDTO {
     private BigDecimal total;
 
     private String shippingMethod;
+
+    private EStatus status;
 
     private User user;
 
