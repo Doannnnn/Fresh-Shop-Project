@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>DASHMIN - Bootstrap Admin Template</title>
+  <title>ADMIN FRESH SHOP</title>
   <th:block th:replace="/admin/layout/head :: head"/>
 </head>
 
@@ -30,7 +30,7 @@
         <header>
           <nav class="navbar bg-body-tertiary">
             <div class="container-fluid" style="margin: 10px">
-              <span class="navbar-brand">List Of Customer</span>
+              <span class="navbar-brand">List Of User</span>
             </div>
           </nav>
         </header>
@@ -43,9 +43,10 @@
             <th>Phone</th>
             <th>Address</th>
             <th>Username</th>
+            <th>Role</th>
           </tr>
           </thead>
-          <tbody id="tbCustomer">
+          <tbody id="tbUser">
 
           </tbody>
         </table>
@@ -69,12 +70,12 @@
 
 <script>
   $(document).ready(function() {
-    const bodyCustomer = $("#tbCustomer");
+    const bodyUser = $("#tbUser");
 
-    const fetchAllCustomer = async () => {
+    const fetchAllUser = async () => {
       try {
         return await $.ajax({
-          url: "http://localhost:8080/api/customer",
+          url: "http://localhost:8080/api/user",
           method: "GET",
           dataType: "json"
         });
@@ -83,31 +84,32 @@
       }
     };
 
-    const renderCustomer = (obj) => {
+    const renderUser = (obj) => {
       return `
             <tr>
                 <td>${obj.id}</td>
-                <td>${obj.name}</td>
+                <td>${obj.fullName}</td>
                 <td>${obj.email}</td>
-                <td>${obj.phone}</td>
+                <td>${obj.phoneNumber}</td>
                 <td>${obj.address}</td>
                 <td>${obj.username}
                 </td>
+                <td>${obj.role}</td>
             </tr>
         `;
     };
 
-    const getAllCustomer = async () => {
-      const customers = await fetchAllCustomer();
-      console.log(customers);
+    const getAllUser = async () => {
+      const Users = await fetchAllUser();
+      console.log(Users);
 
-      customers.forEach(item => {
-        const str = renderCustomer(item);
-        bodyCustomer.append(str);
+      Users.forEach(item => {
+        const str = renderUser(item);
+        bodyUser.append(str);
       });
     };
 
-    getAllCustomer();
+    getAllUser();
   });
 </script>
 

@@ -49,17 +49,16 @@
     </div>
 
     <div id="user-info" th:if="${username}">
-        <img id="user-avatar" src="https://e7.pngegg.com/pngimages/922/729/png-clipart-computer-icons-user-profile-business-san-giovanni-in-persiceto-logo-computer-wallpaper-thumbnail.png">
+        <img id="user-avatar" src="https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png">
         <div class="dropdown-content" id="dropdown-menu">
             <th:block th:if="${isAdmin}">
                 <span style="border-bottom: 1px solid black;" th:text="${username} "></span>
             </th:block>
-
             <th:block th:if="${isClient}">
                 <span style="border-bottom: 1px solid black;" th:text="${username} "></span>
                 <div id="username" style="display: none" th:text="${username}"></div>
             </th:block>
-            <a href="/logout" id="logout-button">LogOut</a>
+            <a href="/logout" id="logout-button">Log Out</a>
         </div>
     </div>
     <!-- End Atribute Navigation -->
