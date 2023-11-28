@@ -106,6 +106,15 @@ function addCartDetail(productId) {
 };
 
 $('#addCartDetailQuantity').on('click', function () {
+    if(!checkUserIsExist()){
+        webToast.Danger({
+            status: 'Please login to add product to cart!',
+            message: '',
+            delay: 3000,
+            align: 'topcenter'
+        });
+        return;
+    }
     const productId = $('#productId').text();
     const quantity = $('#quantity').val();
     const username = $('#username').text();
